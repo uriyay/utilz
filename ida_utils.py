@@ -14,3 +14,10 @@ def fix_noret_func(func=None):
     if func.is_noret:
         new_flags = func.flags ^ idaapi.FUNC_NORET
         idc.set_func_flags(func.ea, new_flags)
+
+def get_struct_offset(s):
+    """Get offset in struct for expressions like 'gap12[72]'"""
+    h, d = s.replace('gap', '').split(']')[0].split('[')
+    h = int(h, base=16)
+    d = int(d)
+    return hex(h + d)
